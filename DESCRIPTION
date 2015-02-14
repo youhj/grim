@@ -1,0 +1,8 @@
+Package: stencils
+Title: Drawing graphical shapes
+Version: 0.0.0.9000
+Authors@R: person("Hyun Jo", "You", , "youhyunjo@ssu.ac.kr", role = c("aut", "cre"))
+Description: Drawing graphical shapes.
+Depends: R (>= 3.1.2), grid, gridBase
+License: GPL(>=3)
+LazyData: true
