@@ -1,8 +1,8 @@
-Package: stencils
-Title: Drawing graphical shapes
-Version: 0.0.0.9000
+Package: grim
+Title: graphic elements
+Version: 0.1.0.9000
 Authors@R: person("Hyun Jo", "You", , "youhyunjo@ssu.ac.kr", role = c("aut", "cre"))
-Description: Drawing graphical shapes.
+Description: graphic elements based on grid and wrappers for base graphics
 Depends: R (>= 3.1.2), grid, gridBase
-License: GPL(>=3)
+License: GPL(>=2)
 LazyData: true
