@@ -3,5 +3,6 @@
 export(bracketGrob)
 export(grid.bracket)
 export(grim.bracket)
+export(grim.text)
 import(grid)
 import(gridBase)

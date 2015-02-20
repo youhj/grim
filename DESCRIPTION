@@ -1,6 +1,6 @@
 Package: grim
 Title: graphic elements
-Version: 0.1.0.9000
+Version: 0.2.0.9000
 Authors@R: person("Hyun Jo", "You", , "youhyunjo@ssu.ac.kr", role = c("aut", "cre"))
 Description: graphic elements based on grid and wrappers for base graphics
 Depends: R (>= 3.1.2), grid, gridBase
