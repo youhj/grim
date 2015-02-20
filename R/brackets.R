@@ -8,11 +8,9 @@
 #' @param y1 y coordinate of point *from* which to draw.
 #' @param x2 x coordinate of point *to* which to draw.
 #' @param y2 y coordinate of point *to* which to draw.
-#' @param h height
-#' @param prop logical; if `TRUE', the height is propotional to the width of
-#' the bracket; if `FALSE', the height is constant (picas).
-#' @param code integer code. determine direction of the bracket left/above (1), right/under (2)
-#' @param offset offset from the baseline (x1, y1) -- (x2, y2)
+#' @param h height (in picas if unit is not specified).
+#' @param code integer code. determine direction of the bracket left (1), right (2)
+#' @param offset offset (in picas if unit is not specified) from the baseline (x1, y1) -- (x2, y2)
 #' @param padding padding sizes of bottom, left, top, right
 #' @param center relative center location, where head is located
 #' @param type bracket type: "curly", "round", "square", or "angle".
@@ -23,8 +21,8 @@
 #' @examples
 #'plot(0, type="n", xlim=c(-1, 16), ylim=c(-0.5, 3.5), xaxp=c(0,15,15), yaxp=c(0,3,3), ylab="")
 #' grim.bracket(0, 0, 0, 3)
-#' grim.bracket(1, 0, 1, 3, h=2)
-#' grim.bracket(2, 0, 2, 3, h=3)
+#' grim.bracket(1, 0, 1, 3, h=1.5)
+#' grim.bracket(2, 0, 2, 3, h=2)
 #' grim.bracket(3, 0, 3, 3, code=2)
 #' grim.bracket(4, 0, 4, 3, center=0.3)
 #' grim.bracket(5, 0, 5, 3, center=0.9)
@@ -32,14 +30,14 @@
 #' grim.bracket(7, 0, 7, 3, lwd=2)
 #' grim.bracket(8, 0, 8, 3, col="red")
 #' grim.bracket(9, 0, 9, 3, type="round")
-#' grim.bracket(10, 0, 10, 3, type="round", h=3)
-#' grim.bracket(11, 0, 11, 3, type="square", h=2)
+#' grim.bracket(10, 0, 10, 3, type="round", h=2)
+#' grim.bracket(11, 0, 11, 3, type="square", h=1.5)
 #' grim.bracket(12, 0, 12, 3, type="square", code=2)
 #' grim.bracket(13, 0, 13, 3, type="angle")
 #' grim.bracket(14, 0, 14, 3, type="angle", code=2, center=1/3, h=2) 
 #' grim.bracket(15, 0, 15, 3, type="angle", code=2, center=2/3) 
 #' @export
-grim.bracket <- function(x1, y1, x2, y2, h=unit(1, "picas"), prop=FALSE, code=1, offset=0, padding=rep(0, 4),
+grim.bracket <- function(x1, y1, x2, y2, h=1, code=1, offset=0, padding=rep(0, 4),
                     center=0.5,
                     type=c("curly", "round", "square", "angle"),
                     head=list(height=c(0.5, 0.5), width=c(1/8, 1/8), curvature=c(0.5, 0.5)),
@@ -59,26 +57,26 @@ grim.bracket <- function(x1, y1, x2, y2, h=unit(1, "picas"), prop=FALSE, code=1,
     x2 <- as.numeric(convertX(unit(x2, "native"), "picas"))    
     y1 <- as.numeric(convertY(unit(y1, "native"), "picas"))
     y2 <- as.numeric(convertY(unit(y2, "native"), "picas"))
-    if(!is.unit(h)) { h <- unit(h, "native") }
-    h <- as.numeric(convertHeight(h, "picas"))    
-    offset <- as.numeric(convertHeight(unit(offset, "native"), "picas"))
-    padding[c(1, 3)] <- as.numeric(convertHeight(unit(padding[c(1, 3)], "native"), "picas"))
-    padding[c(2, 4)] <- as.numeric(convertWidth(unit(padding[c(2, 4)], "native"), "picas"))
-    
+    if(is.unit(h)) { h <- as.numeric(convertHeight(h, "picas")) }
+    if(is.unit(offset)) { offset <- as.numeric(convertHeight(offset, "picas")) }
+    if(is.unit(padding[1])) { as.numeric(convertHeight(padding[1], "picas"))  }
+    if(is.unit(padding[3])) { as.numeric(convertHeight(padding[3], "picas"))  }
+    if(is.unit(padding[2])) { as.numeric(convertWidth(padding[2], "picas"))  }
+    if(is.unit(padding[4])) { as.numeric(convertWidth(padding[4], "picas"))  }
+
     dx <- x2 - x1
     dy <- y2 - y1
     w <- sqrt(dx^2 + dy^2)
     th <- 180 * atan2(dy, dx) / pi
 
-    vp <- viewport(x=x1, y=y1, width=w, height=ifelse(prop, w*h, h)+offset,
+    vp <- viewport(x=x1, y=y1, width=w, height=h+offset,
                    default.units="picas",
                    angle=th, just=c("left","bottom"),
                    gp=gpar(...)) 
     pushViewport(vp)
     
-    
     vp2 <- viewport(x=padding[2], y=offset+padding[1], width=w-sum(padding[c(2,4)]),
-                    height=ifelse(prop, w*h, h)-sum(padding[c(1,3)]),
+                    height=h-sum(padding[c(1,3)]),
                     default.units="picas", just=c("left", "bottom"), gp=gpar(...))
     pushViewport(vp2)
     

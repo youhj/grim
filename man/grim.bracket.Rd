@@ -4,11 +4,11 @@
 \alias{grim.bracket}
 \title{Add a Bracket to a Plot (base graphics)}
 \usage{
-grim.bracket(x1, y1, x2, y2, h = unit(1, "picas"), prop = FALSE, code = 1,
-  offset = 0, padding = rep(0, 4), center = 0.5, type = c("curly",
-  "round", "square", "angle"), head = list(height = c(0.5, 0.5), width =
-  c(1/8, 1/8), curvature = c(0.5, 0.5)), tail = list(height = c(0.5, 0.5),
-  width = c(1/8, 1/8), curvature = c(0.5, 0.5)), ...)
+grim.bracket(x1, y1, x2, y2, h = 1, code = 1, offset = 0,
+  padding = rep(0, 4), center = 0.5, type = c("curly", "round", "square",
+  "angle"), head = list(height = c(0.5, 0.5), width = c(1/8, 1/8), curvature =
+  c(0.5, 0.5)), tail = list(height = c(0.5, 0.5), width = c(1/8, 1/8),
+  curvature = c(0.5, 0.5)), ...)
 }
 \arguments{
 \item{x1}{x coordinate of point *from* which to draw.}
@@ -19,14 +19,11 @@ grim.bracket(x1, y1, x2, y2, h = unit(1, "picas"), prop = FALSE, code = 1,
 
 \item{y2}{y coordinate of point *to* which to draw.}
 
-\item{h}{height}
+\item{h}{height (in picas if unit is not specified).}
 
-\item{prop}{logical; if `TRUE', the height is propotional to the width of
-the bracket; if `FALSE', the height is constant (picas).}
+\item{code}{integer code. determine direction of the bracket left (1), right (2)}
 
-\item{code}{integer code. determine direction of the bracket left/above (1), right/under (2)}
-
-\item{offset}{offset from the baseline (x1, y1) -- (x2, y2)}
+\item{offset}{offset (in picas if unit is not specified) from the baseline (x1, y1) -- (x2, y2)}
 
 \item{padding}{padding sizes of bottom, left, top, right}
 
@@ -47,8 +44,8 @@ Draw brackets, parentheses, curly brackets, angled brackets between a pair of po
 \examples{
 plot(0, type="n", xlim=c(-1, 16), ylim=c(-0.5, 3.5), xaxp=c(0,15,15), yaxp=c(0,3,3), ylab="")
 grim.bracket(0, 0, 0, 3)
-grim.bracket(1, 0, 1, 3, h=2)
-grim.bracket(2, 0, 2, 3, h=3)
+grim.bracket(1, 0, 1, 3, h=1.5)
+grim.bracket(2, 0, 2, 3, h=2)
 grim.bracket(3, 0, 3, 3, code=2)
 grim.bracket(4, 0, 4, 3, center=0.3)
 grim.bracket(5, 0, 5, 3, center=0.9)
@@ -56,8 +53,8 @@ grim.bracket(6, 0, 6, 3, lty=2)
 grim.bracket(7, 0, 7, 3, lwd=2)
 grim.bracket(8, 0, 8, 3, col="red")
 grim.bracket(9, 0, 9, 3, type="round")
-grim.bracket(10, 0, 10, 3, type="round", h=3)
-grim.bracket(11, 0, 11, 3, type="square", h=2)
+grim.bracket(10, 0, 10, 3, type="round", h=2)
+grim.bracket(11, 0, 11, 3, type="square", h=1.5)
 grim.bracket(12, 0, 12, 3, type="square", code=2)
 grim.bracket(13, 0, 13, 3, type="angle")
 grim.bracket(14, 0, 14, 3, type="angle", code=2, center=1/3, h=2)
